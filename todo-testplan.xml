@@ -1,0 +1,7 @@
+<suite name="Todo MVC">
+    <test name="Demo">
+        <classes>
+            <class name="todomvc.TodoMVCTest"/>
+        </classes>
+    </test>
+</suite>

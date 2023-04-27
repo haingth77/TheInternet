@@ -1,0 +1,12 @@
+<suite name="Example">
+    <test name="demo">
+        <classes>
+            <class name="theInternet.ExampleTest"/>
+        </classes>
+    </test>
+    <test name="example2">
+        <classes>
+            <class name="theInternet.Example2Test"/>
+        </classes>
+    </test>
+</suite>
