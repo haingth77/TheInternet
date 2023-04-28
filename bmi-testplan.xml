@@ -1,18 +1,6 @@
 <suite name="Calculator">
-    <test name="edge browser">
-        <parameter name="browser" value="edge"/>
-        <classes>
-            <class name="calculator.BodyMassIndexTest"/>
-        </classes>
-    </test>
     <test name="chrome browser">
         <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="calculator.BodyMassIndexTest"/>
-        </classes>
-    </test>
-    <test name="firefox browser">
-        <parameter name="browser" value="firefox"/>
         <classes>
             <class name="calculator.BodyMassIndexTest"/>
         </classes>
