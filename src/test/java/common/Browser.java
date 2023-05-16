@@ -1,5 +1,7 @@
 package common;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -7,15 +9,20 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Browser {
     private static WebDriver driver;
-    private static int MAXIMUM_TIME_OUT_IN_SECONDS = 30;
+    private static final int MAXIMUM_TIME_OUT_IN_SECONDS = 30;
     public static WebDriverWait wait;
     public static void open(String browser) {
         switch (browser) {
@@ -117,4 +124,27 @@ public class Browser {
                 .moveToElement(driver.findElement(locator))
                 .perform();
     }
+
+    public static void wait(By locator) {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(MAXIMUM_TIME_OUT_IN_SECONDS));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public static String getTextOfWebElements(By locator) {
+        List<WebElement> elements = driver.findElements(locator);
+        return elements.stream().map(WebElement::getText).collect(Collectors.toList()).toString();
+    }
+
+    public static String getDataFromCsvFile(String fileLoction) throws IOException, CsvValidationException {
+        String[] csvCells;
+        List<String> provinceNameCsv = new ArrayList<String>();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        CSVReader readcsv = new CSVReader(new FileReader(fileLoction));
+
+        while ((csvCells = readcsv.readNext()) != null) {
+            provinceNameCsv.add(csvCells[0]);
+        }
+        return provinceNameCsv.toString().replace("\uFEFF","");
+    }
+
 }
